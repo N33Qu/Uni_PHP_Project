@@ -6,7 +6,7 @@
     <!-- Session Status -->
     <x-auth-session-status class="mb-4" :status="session('status')" />
 
-    <form method="POST" action="{{ route('password.email') }}">
+    <form id="forgotPasswordForm" method="POST" action="{{ route('password.email') }}">
         @csrf
 
         <!-- Email Address -->
@@ -22,4 +22,17 @@
             </x-primary-button>
         </div>
     </form>
+
+    <script>
+        document.getElementById('forgotPasswordForm').addEventListener('submit', function (event) {
+            let email = document.getElementById('email').value;
+
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+            if (!emailRegex.test(email)) {
+                alert('Wprowadź poprawny adres email.');
+                event.preventDefault();
+            }
+        });
+    </script>
 </x-guest-layout>

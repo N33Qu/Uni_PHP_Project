@@ -13,7 +13,7 @@
         @csrf
     </form>
 
-    <form method="post" action="{{ route('profile.update') }}" class="mt-6 space-y-6">
+    <form id="updateForm" method="post" action="{{ route('profile.update') }}" class="mt-6 space-y-6">
         @csrf
         @method('patch')
 
@@ -61,4 +61,24 @@
             @endif
         </div>
     </form>
+
+    <script>
+        document.getElementById('updateForm').addEventListener('submit', function (event) {
+            let name = document.getElementById('name').value;
+            let email = document.getElementById('email').value;
+
+            const nameRegex = /^[a-zA-ZąćęłńóśźżĄĆĘŁŃÓŚŹŻ]+$/;
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+            if (!nameRegex.test(name)) {
+                alert('Wprowadź poprawną nazwę.');
+                event.preventDefault();
+            }
+
+            if (!emailRegex.test(email)) {
+                alert('Wprowadź poprawny adres email.');
+                event.preventDefault();
+            }
+        });
+    </script>
 </section>

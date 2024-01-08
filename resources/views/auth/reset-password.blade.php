@@ -1,5 +1,5 @@
 <x-guest-layout>
-    <form method="POST" action="{{ route('password.store') }}">
+    <form id="resetPasswordForm" method="POST" action="{{ route('password.store') }}">
         @csrf
 
         <!-- Password Reset Token -->
@@ -36,4 +36,24 @@
             </x-primary-button>
         </div>
     </form>
+    <script>
+        document.getElementById('resetPasswordForm').addEventListener('submit', function (event) {
+            let email = document.getElementById('email').value;
+            let password = document.getElementById('password').value;
+
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            const passwordRegex = /^(?=.*[A-Z])(?=.*\d).{8,25}$/;
+
+            if (!emailRegex.test(email)) {
+                alert('Wprowadź poprawny adres email.');
+                event.preventDefault();
+            }
+
+            if (!passwordRegex.test(password)) {
+                alert('Wprowadź poprawne hasło.');
+                event.preventDefault();
+            }
+
+        });
+    </script>
 </x-guest-layout>

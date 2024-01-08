@@ -3,7 +3,7 @@
         {{ __('This is a secure area of the application. Please confirm your password before continuing.') }}
     </div>
 
-    <form method="POST" action="{{ route('password.confirm') }}">
+    <form id="confirmPasswordForm" method="POST" action="{{ route('password.confirm') }}">
         @csrf
 
         <!-- Password -->
@@ -24,4 +24,17 @@
             </x-primary-button>
         </div>
     </form>
+
+    <script>
+        document.getElementById('confirmPasswordForm').addEventListener('submit', function (event) {
+            let password = document.getElementById('password').value;
+
+            const passwordRegex = /^(?=.*[A-Z])(?=.*\d).{8,25}$/;
+
+            if (!passwordRegex.test(password)) {
+                alert('Wprowadź poprawne hasło.');
+                event.preventDefault();
+            }
+        });
+    </script>
 </x-guest-layout>

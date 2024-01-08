@@ -1,5 +1,5 @@
 <x-guest-layout>
-    <form method="POST" action="{{ route('register') }}">
+    <form id="registerForm" method="POST" action="{{ route('register') }}">
         @csrf
 
         <!-- Name -->
@@ -49,4 +49,36 @@
             </x-primary-button>
         </div>
     </form>
+    <script>
+        document.getElementById('registerForm').addEventListener('submit', function (event) {
+            let name = document.getElementById('name').value;
+            let email = document.getElementById('email').value;
+            let password = document.getElementById('password').value;
+            let password_confirmation = document.getElementById('password_confirmation').value;
+
+            const nameRegex = /^[a-zA-ZąćęłńóśźżĄĆĘŁŃÓŚŹŻ]+$/;
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            const passwordRegex = /^(?=.*[A-Z])(?=.*\d).{8,25}$/;
+
+            if (!nameRegex.test(name)) {
+                alert('Wprowadź poprawną nazwę.');
+                event.preventDefault();
+            }
+
+            if (!emailRegex.test(email)) {
+                alert('Wprowadź poprawny adres email.');
+                event.preventDefault();
+            }
+
+            if (!passwordRegex.test(password)) {
+                alert('Wprowadź poprawne hasło.');
+                event.preventDefault();
+            }
+
+            if (password !== password_confirmation) {
+                alert('Hasła nie są takie same.');
+                event.preventDefault();
+            }
+        });
+    </script>
 </x-guest-layout>

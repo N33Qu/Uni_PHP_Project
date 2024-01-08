@@ -9,7 +9,7 @@
         </p>
     </header>
 
-    <form method="post" action="{{ route('password.update') }}" class="mt-6 space-y-6">
+    <form id="updatePasswordForm" method="post" action="{{ route('password.update') }}" class="mt-6 space-y-6">
         @csrf
         @method('put')
 
@@ -45,4 +45,29 @@
             @endif
         </div>
     </form>
+
+    <script>
+        document.getElementById('updatePasswordForm').addEventListener('submit', function (event) {
+            let currentPassword = document.getElementById('update_password_current_password').value;
+            let updatePassword = document.getElementById('update_password_password').value;
+            let confirmUpdatePassword = document.getElementById('update_password_password_confirmation').value;
+
+            const passwordRegex = /^(?=.*[A-Z])(?=.*\d).{8,25}$/;
+
+            if (!passwordRegex.test(currentPassword)) {
+                alert('Wprowadź poprawne hasło.');
+                event.preventDefault();
+            }
+
+            if (!passwordRegex.test(updatePassword)) {
+                alert('Wprowadź poprawne zaaktualizowane hasło.');
+                event.preventDefault();
+            }
+
+            if (updatePassword !== confirmUpdatePassword) {
+                alert('Hasła nie są takie same.');
+                event.preventDefault();
+            }
+        });
+    </script>
 </section>

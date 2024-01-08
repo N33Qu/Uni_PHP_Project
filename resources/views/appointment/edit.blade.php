@@ -6,7 +6,7 @@
     </x-slot>
     <!-- Session Status -->
     <x-auth-session-status class="mb-4" :status="session('status')" />
-    <form action="{{ route('appointment.update', ['appointment' => $appointment]) }}" method="POST">
+    <form id="editForm" action="{{ route('appointment.update', ['appointment' => $appointment]) }}" method="POST">
         @csrf
         @method('put')
         <div>
@@ -44,4 +44,43 @@
             {{ __('Update') }}
         </x-primary-button>
     </form>
+    <script>
+        document.getElementById('editForm').addEventListener('submit', function (event) {
+            let name = document.getElementById('name').value;
+            let lastName = document.getElementById('lastName').value;
+            let phoneNumber = document.getElementById('phoneNumber').value;
+            let email = document.getElementById('email').value;
+            let date = document.getElementById('date').value;
+
+            const nameRegex = /^[a-zA-Z]+$/;
+            const phoneRegex = /^[1-9]\d{8}$/;
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            const dateRegex = /^\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}$/
+
+            if (!nameRegex.test(name)) {
+                alert('Wprowadź poprawne imie.');
+                event.preventDefault();
+            }
+
+            if (!nameRegex.test(lastName)) {
+                alert('Wprowadź poprawne nazwisko.');
+                event.preventDefault();
+            }
+
+            if (!phoneRegex.test(phoneNumber)) {
+                alert('Wprowadź poprawny numer telefonu.');
+                event.preventDefault();
+            }
+
+            if (!emailRegex.test(email)) {
+                alert('Wprowadź poprawny adres email.');
+                event.preventDefault();
+            }
+
+            if (dateRegex.test(date)) {
+                alert('Wprowadź poprawną datę.');
+                event.preventDefault();
+            }
+        });
+    </script>
 </x-app-layout>

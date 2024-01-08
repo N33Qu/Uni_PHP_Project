@@ -49,9 +49,9 @@ class AppointmentController extends Controller
     public function update(Appointment $appointment, Request $request)
     {
         $data = $request->validate([
-            'name' => ['required', 'alpha:ascii'],
-            'lastName' => ['required', 'alpha:ascii'],
-            'phoneNumber' => ['required', 'numeric', 'digits:9'],
+            'name' => ['required', 'regex:', 'max:255'],
+            'lastName' => ['required', 'alpha:ascii', 'max:255'],
+            'phoneNumber' => ['required', 'numeric', 'regex: /^[1-9]\d{8}$/'],
             'email' => ['required', 'email:filter_unicode'],
             'date' => ['required', 'date'],
         ]);
